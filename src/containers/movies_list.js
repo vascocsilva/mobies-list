@@ -15,7 +15,8 @@ class MoviesList extends Component {
   render() {
     const list = this.props.movies.map(movie =>
       <li key={ movie.imdbID }>
-        { movie.Title } ({ movie.Year }) · { movie.Director } · { movie.Genre }&nbsp;
+        <a href={`http://www.imdb.com/title/${ movie.imdbID }`}>{ movie.Title }</a>
+        &nbsp;({ movie.Year }) · { movie.Director } · { movie.Genre }&nbsp;
         <span>
           <button onClick={ () => this.props.deleteMovie(movie) }>delete</button>
         </span>

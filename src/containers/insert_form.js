@@ -19,19 +19,23 @@ class InsertForm extends Component {
     e.preventDefault();
     const title = e.target.movie.value;
 
-    this.props.addMovie(title);
-    this.setState({title: '', moviesList: []});
+    if (title.length > 0) {
+      this.props.addMovie(title);
+      this.setState({title: '', moviesList: []});
+    }
   }
 
   onChangeTitle = (e) => {
     this.setState({title: e.target.value});
   }
 
-  getHints = (e) => {
+  getHints = _.debounce((e) => {
     const self = this;
-    const api_url = `http://www.omdbapi.com/?t=*${this.state.title}*&y=&plot=full&r=json`;
 
-    axios.get(api_url)
+    if (this.state.title.length > 0) {
+      const api_url = `http://www.omdbapi.com/?t=*${this.state.title}*&y=&plot=full&r=json`;
+
+      axios.get(api_url)
       .then((response) => {
         if (response.data.Response === 'False') {
           self.setState({moviesList: []});
@@ -45,7 +49,8 @@ class InsertForm extends Component {
           console.log(error);
         }
       )
-  }
+    }
+  }, 500)
 
   render() {
     const list = this.state.moviesList.map(mv =>
@@ -67,7 +72,7 @@ class InsertForm extends Component {
           <datalist id="movies">
             { list }
           </datalist>
-          <input type="submit" value="save"/>
+          <input type="submit" value="add"/>
         </form>
       </div>
     )

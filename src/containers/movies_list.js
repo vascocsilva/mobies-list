@@ -1,7 +1,8 @@
 import React, {PropTypes, Component} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {deleteMovie} from '../actions/movie-actions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { deleteMovie } from '../actions/movie-actions';
+import MovieItem from '../components/movie_item';
 
 class MoviesList extends Component {
   constructor(props) {
@@ -14,13 +15,14 @@ class MoviesList extends Component {
 
   render() {
     const list = this.props.movies.map(movie =>
-      <li key={ movie.imdbID }>
-        <a href={`http://www.imdb.com/title/${ movie.imdbID }`}>{ movie.Title }</a>
-        &nbsp;({ movie.Year }) · { movie.Director } · { movie.Genre }&nbsp;
-        <span>
-          <button onClick={ () => this.props.deleteMovie(movie) }>delete</button>
-        </span>
-      </li>
+      <MovieItem movie={movie} key={movie.imdbID} />
+      // <li key={ movie.imdbID }>
+      //   <a href={`http://www.imdb.com/title/${ movie.imdbID }`}>{ movie.Title }</a>
+      //   &nbsp;({ movie.Year }) · { movie.Director } · { movie.Genre } · Rating: {`${ movie.imdbRating} (${ movie.imdbVotes })`}&nbsp;
+      //   <span>
+      //     <button onClick={ () => this.props.deleteMovie(movie) }>delete</button>
+      //   </span>
+      // </li>
     );
 
     return (

@@ -13,14 +13,6 @@ export default (state = [], action) => {
       console.log(action.payload);
       const movieId = action.payload.imdbID;
       return state.filter((movie) => movie.imdbID !== movieId);
-    // case types.GET_HINT:
-    //   const data = action.payload.data;
-    // 
-    //   if (data.Response === "False") {
-    //     return state;
-    //   } else {
-    //     return [...state, Object.assign({}, action.payload.data)];
-    //   }
     default:
       return state;
   }
